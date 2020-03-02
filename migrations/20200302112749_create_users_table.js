@@ -66,7 +66,7 @@ exports.up = function(knex) {
       .integer('registered_participants', 128) 
       .notNullable();
       tbl
-      .integer('class_max_paricipants', 128) //max paricipants
+      .integer('class_max_participants', 128) //max paricipants
       .notNullable();
       tbl
       .string('class_img_url', 256) //optional image
