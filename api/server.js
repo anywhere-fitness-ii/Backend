@@ -21,3 +21,16 @@ server.get("/", (req, res) => {
 
 module.exports = server;
 
+// function checkRole(role) {
+//     return (req, res, next) => {
+//       if (
+//         req.decodedToken && //if theres a decoded token
+//         req.decodedToken.role &&//if the decoded token has a role property
+//         req.decodedToken.role.toLowerCase() === role//does it equal what's passed into the checkRole function
+//       ) {
+//         next();
+//       } else {
+//         res.status(403).json({ you: "shall not pass!" });
+//       }
+//     };
+//   }
