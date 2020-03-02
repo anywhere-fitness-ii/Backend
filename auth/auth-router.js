@@ -4,6 +4,7 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
 const Users = require("../users/users-model.js");
+const { jwtSecret } = require("../config/secrets.js");
 
 router.post("/register", (req, res) => {
     let user = req.body;
@@ -49,13 +50,13 @@ router.post("/register", (req, res) => {
         role: user.role,
     };
   
-    const secret = "is it secret? is it safe?"  
+    // const secret = "is it secret? is it safe?"  
   
     const options = {
       expiresIn: "1h"
     };
   
-    return jwt.sign(payload, secret, options);
+    return jwt.sign(payload, jwtSecret, options);
   }
   
   module.exports = router;
