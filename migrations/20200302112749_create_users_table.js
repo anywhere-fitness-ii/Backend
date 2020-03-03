@@ -100,3 +100,14 @@ exports.down = function(knex) {
         .dropTableIfExists('users')
         .dropTableIfExists('roles')
 };
+
+
+// "class_name": "nancy",
+// "class_type": "pass",
+// "class_date": "23r",
+// "class_start_time": "34",
+// "class_duration": "1hr",
+// "class_intensity": "hard",
+// "class_location": "michigan",
+// "registered_pariticipants": 33,
+// "class_max_participants": 40
