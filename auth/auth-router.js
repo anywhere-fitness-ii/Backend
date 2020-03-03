@@ -58,7 +58,5 @@ router.post("/register", (req, res) => {
   
     return jwt.sign(payload, jwtSecret, options);
   }
-  
-  module.exports = router;
 
   module.exports = router;
