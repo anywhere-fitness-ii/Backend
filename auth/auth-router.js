@@ -47,13 +47,13 @@ router.post("/register", (req, res) => {
     const payload = {
       subject: user.id,
       username: user.username,
-        role: user.role,
+      role: user.role_id,
     };
   
     // const secret = "is it secret? is it safe?"  
   
     const options = {
-      expiresIn: "1h"
+      expiresIn: "9d"
     };
   
     return jwt.sign(payload, jwtSecret, options);

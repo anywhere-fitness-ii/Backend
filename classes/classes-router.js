@@ -1,13 +1,30 @@
 const router = require("express").Router();
 
 const db = require('../data/db-config.js');
+const authenticate = require('../auth/authenticate-middleware.js');
 
 
 const Classes = require("../users/users-model.js");
 
 
+function checkRole() {
+    return (req, res, next) => {
+      if (
+        req.decodedToken && //if theres a decoded token
+        req.decodedToken.role &&//if the decoded token has a role property
+        req.decodedToken.role === 2//does it equal what's passed into the checkRole function
+      ) {
+        next();
+      } else {
+        res.status(403).json({ you: "shall not pass!" });
+      }
+    };
+  }
+
+
+
 //working as long as the person has logged in and passed in the token
-router.get("/", (req, res) => {
+router.get("/", authenticate, (req, res) => {
     Classes.findClasses()
       .then(classes => {
         res.json(classes);
@@ -16,7 +33,7 @@ router.get("/", (req, res) => {
   });
 
 //get classes by id
-router.get('/:id', (req, res) => {
+router.get('/:id', authenticate, (req, res) => {
     const {id} = req.params
     Classes.findClassById(id)
     .then(classes => {
@@ -34,7 +51,7 @@ router.get('/:id', (req, res) => {
 })
 
 //add class
-router.post('/', (req, res) => {
+router.post('/', authenticate, checkRole(), (req, res) => {
     const classData = req.body;
     db("classes")
     .insert(classData, "id")
@@ -53,7 +70,7 @@ router.post('/', (req, res) => {
 
 
 //edit class working but not returning edited class object
-router.put('/:id', (req, res) => {
+router.put('/:id', authenticate, checkRole(), (req, res) => {
     const { id } = req.params;
     const changes = req.body;
 
@@ -75,7 +92,7 @@ router.put('/:id', (req, res) => {
 });
 
 //delete class => working but not returning full object
-router.delete('/:id', (req, res) => {
+router.delete('/:id', authenticate, checkRole(), (req, res) => {
     const {id} = req.params;
 
     Classes.removeClass(id)
