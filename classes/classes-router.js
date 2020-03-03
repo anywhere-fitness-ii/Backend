@@ -40,7 +40,7 @@ router.get('/:id', authenticate, (req, res) => {
         if(classes) {
             res.json(classes)
         } else {
-            res.status(404).json({message: "could not find project with given id"})
+            res.status(404).json({message: "could not find class with given id"})
         }
 
     })
