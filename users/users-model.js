@@ -8,7 +8,8 @@ module.exports = {
 
   findClasses,
   findClassById,
-//   editClass
+  editClass,
+  removeClass
 
 };
 
@@ -45,3 +46,15 @@ function findClassById(id) {
       .first();
 }
 
+function editClass(changes, id) {
+    return db("classes")
+    .where({id})
+    .update(changes, '*')
+}
+
+
+function removeClass(id) {
+    return db("classes")
+    .where({id})
+    .del()
+};

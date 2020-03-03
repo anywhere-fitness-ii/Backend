@@ -52,10 +52,44 @@ router.post('/', (req, res) => {
 });
 
 
-// //edit class
-// router.put('/:id', (req,res) => {
+//edit class working but not returning edited class object
+router.put('/:id', (req, res) => {
+    const { id } = req.params;
+    const changes = req.body;
 
-// })
+    Classes.findClassById(id)
+    .then(classs => {
+        if(classs) {
+            Classes.editClass(changes, id)
+            .then(updatedClass => {
+                res.json(updatedClass);
+            })
+        } else {
+            res.status(404).json({message: "couldn't find class with given id"})
+        }
+    })
+    .catch(err => {
+        console.log(err)
+        res.status(500).json({message: "server error editing class"})
+    });
+});
+
+//delete class => working but not returning full object
+router.delete('/:id', (req, res) => {
+    const {id} = req.params;
+
+    Classes.removeClass(id)
+    .then(deleted => {
+        if(deleted) {
+            res.json({removed: deleted})
+        } else {
+            res.status(404).json({message: "could not find class with matching id"})
+        }
+    })
+    .catch(err => {
+        res.status(500).json({message: "server error deleting class"})
+    })
+})
 
   
   module.exports = router;
