@@ -8,12 +8,14 @@ const { jwtSecret } = require("../config/secrets.js");
 
 router.post("/register", (req, res) => {
     let user = req.body;
+    
     const hash = bcrypt.hashSync(user.password, 10); 
     user.password = hash;
   
     Users.add(user)
       .then(saved => {
-        res.status(201).json(saved);
+        const token = generateToken(saved);
+        res.status(201).json({saved, token});
       })
       .catch(error => {
         res.status(500).json(error);
@@ -31,6 +33,7 @@ router.post("/register", (req, res) => {
   
           res.status(200).json({
             message: `Welcome ${user.username}!`,
+            user_Id: `${user.id}`,
             token // send the token
           });
         } else {
