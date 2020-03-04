@@ -27,6 +27,7 @@ function checkRole() {
 router.get("/", authenticate, (req, res) => {
     Classes.findClasses()
       .then(classes => {
+          
         res.json(classes);
       })
       .catch(err => res.send(err));
@@ -123,5 +124,20 @@ router.delete('/:id', authenticate, checkRole(), (req, res) => {
   
   module.exports = router;
 
-  
+
+//   "id": 5,
+//     "class_name": "a",
+//     "class_type": "pass",
+//     "class_date": "23r",
+//     "class_start_time": "34",
+//     "class_duration": "1hr",
+//     "class_intensity": "hard",
+//     "class_location": "michigan",
+//     "registered_participants": 33,
+//     "class_max_participants": 40,
+//     "creator_id": 7,
+//     "class_img_url": null,
+//     "rating": null,
+//     "instructor_name": "greg",
+//     "instructor_pic": null
   
