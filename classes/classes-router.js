@@ -38,7 +38,17 @@ router.get('/:id', authenticate, (req, res) => {
     Classes.findClassById(id)
     .then(classes => {
         if(classes) {
-            res.json(classes)
+            Classes.findById(classes.creator_id).then(user => {
+
+                classes["instructor_name"] = user.name;
+                classes['instructor_pic'] = user.picture_url;
+
+                res.status(200).json(classes);
+
+            }).catch(err => {
+                console.log(err);
+                res.status(500).json({message: "Server error."});
+            })
         } else {
             res.status(404).json({message: "could not find class with given id"})
         }
@@ -53,6 +63,8 @@ router.get('/:id', authenticate, (req, res) => {
 //add class
 router.post('/', authenticate, checkRole(), (req, res) => {
     const classData = req.body;
+    console.log(req.decodedToken);
+    classData['creator_id'] = req.decodedToken.subject;
     db("classes")
     .insert(classData, "id")
     .then(ids => {

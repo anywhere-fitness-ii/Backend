@@ -69,6 +69,11 @@ exports.up = function(knex) {
       .integer('class_max_participants', 128) //max paricipants
       .notNullable();
       tbl
+      .integer('creator_id')
+      .references('id')
+      .inTable('users')
+      .notNullable()
+      tbl
       .string('class_img_url', 256) //optional image
       tbl
       .integer('rating'); //1-10
