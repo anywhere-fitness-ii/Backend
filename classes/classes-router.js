@@ -27,7 +27,6 @@ function checkRole() {
 router.get("/", authenticate, (req, res) => {
     Classes.findClasses()
       .then(classes => {
-          
         res.json(classes);
       })
       .catch(err => res.send(err));

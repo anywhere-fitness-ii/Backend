@@ -5,6 +5,7 @@ module.exports = {
   find,
   findBy,
   findById,
+  removeUser,
 
   findClasses,
   findClassById,
@@ -14,7 +15,7 @@ module.exports = {
 };
 
 function find() {
-  return db('users').select('id', 'name', 'email', 'username', 'password', 'role_id', 'picture_url', 'age', 'weight', 'height', 'specialty');
+  return db('users').select('id', 'name', 'email', 'username', 'password', 'role_id');
 }
 
 function findBy(filter) {
@@ -32,6 +33,14 @@ function findById(id) {
     .where({ id })
     .first();
 }
+
+function removeUser(id) {
+  return db("users")
+    .where({id})
+    .del()
+}
+
+
 
 
 
