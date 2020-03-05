@@ -37,11 +37,14 @@ router.get('/:id', authenticate, (req, res) => {
     const {id} = req.params
     Classes.findClassById(id)
     .then(classes => {
-        if(classes) {
-            Classes.findById(classes.creator_id).then(user => {
+        
+        if(classes && classes.complete === 0) {
+            console.log(classes)
+            Classes.findById(classes.creator_id).then(users => {
 
-                classes["instructor_name"] = user.name;
-                classes['instructor_pic'] = user.picture_url;
+                classes["instructor_name"] = users.name;
+                classes['instructor_pic'] = users.picture_url;
+                classes['completed'] = false;
 
                 res.status(200).json(classes);
 
@@ -49,7 +52,22 @@ router.get('/:id', authenticate, (req, res) => {
                 console.log(err);
                 res.status(500).json({message: "Server error."});
             })
-        } else {
+        } else if(classes && classes.complete === 1) {
+            Classes.findById(classes.creator_id).then(users => {
+
+                classes["instructor_name"] = users.name;
+                classes['instructor_pic'] = users.picture_url;
+                classes['completed'] = true;
+                
+
+                res.status(200).json(classes);
+
+            }).catch(err => {
+                console.log(err);
+                res.status(500).json({message: "Server error."});
+            })
+        }
+        else {
             res.status(404).json({message: "could not find class with given id"})
         }
 
