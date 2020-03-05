@@ -32,5 +32,22 @@ router.get('/:id', (req, res) => {
     })
 })
 
+//delete user
+router.delete('/:id', (req, res) => {
+    const {id} = req.params;
+
+    Users.removeUser(id)
+    .then(deleted => {
+        if(deleted) {
+            res.json({removed: deleted})
+        } else {
+            res.status(404).json({message: "could not find user with matching id"})
+        }
+    })
+    .catch(err => {
+        res.status(500).json({message: "server error deleting user"})
+    })
+})
+
 
 module.exports = router;
