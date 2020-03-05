@@ -77,6 +77,12 @@ exports.up = function(knex) {
       .string('class_img_url', 256) //optional image
       tbl
       .integer('rating'); //1-10
+      tbl
+      .boolean('complete')
+      .defaultTo(false) 
+      tbl
+      .boolean('register')
+      .defaultTo(false)
   })
   .createTable('user_classes', tbl => {
       tbl.increments();
