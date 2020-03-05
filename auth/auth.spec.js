@@ -43,7 +43,7 @@ describe('authRouter', function() {
             // .set('Content-Type', 'application/json')
             .post('/api/auth/login')
             .send({
-                username: "greg",
+                username: "damon",
                 password: "pass"
             })
             .then(res => {
