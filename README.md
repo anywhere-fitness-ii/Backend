@@ -20,11 +20,13 @@ Required: {
 }
 
 
-# Get Users - Must be logged in to access
+# Users - Must be logged in to access
 
 ## Get all users: .get(api/users)
 
 ## Get user by id: .get(api/users/:id)
+
+## Delete user: .delete(api/users/:id)
 
 
 # Classes - must be logged in to access
